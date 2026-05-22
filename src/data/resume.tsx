@@ -5,6 +5,19 @@ import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Python } from "@/components/ui/svgs/python";
+import type { ReactNode } from "react";
+
+// Shape of a hackathon/event entry. Declared so the (empty by default)
+// `hackathons` array below has a real element type instead of `never`,
+// which would break the build when the section is rendered.
+type Hackathon = {
+  title: string;
+  dates: string;
+  location?: string;
+  description?: string;
+  image?: string;
+  links?: { href: string; icon?: ReactNode; title: string }[];
+};
 
 // ────────────────────────────────────────────────────────────────
 // This file is the single source of truth for your personal site.
@@ -157,7 +170,7 @@ export const DATA = {
     //   image: "https://placehold.co/600x400?text=Event",
     //   links: [],
     // },
-  ],
+  ] as Hackathon[],
 
   // ── Section headings ──────────────────────────────────────
   // The badge / title / subtitle shown above each section. Edit
