@@ -7,9 +7,44 @@ import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Python } from "@/components/ui/svgs/python";
 import type { ReactNode } from "react";
 
-// Shape of a hackathon/event entry. Declared so the (empty by default)
-// `hackathons` array below has a real element type instead of `never`,
-// which would break the build when the section is rendered.
+// Entry shapes for the content arrays below. These exist so the arrays
+// keep a real element type even when emptied — inside `as const`, an
+// empty `[]` would otherwise infer as `never[]`, and mapping over it in
+// a section component breaks the build (`Property 'x' does not exist on
+// type 'never'`). So you can safely clear any of these to hide a section.
+type Work = {
+  company: string;
+  href: string;
+  badges: readonly string[];
+  location: string;
+  title: string;
+  logoUrl: string;
+  start: string;
+  end: string;
+  description: string;
+};
+
+type Education = {
+  school: string;
+  href: string;
+  degree: string;
+  logoUrl: string;
+  start: string;
+  end: string;
+};
+
+type Project = {
+  title: string;
+  href: string;
+  dates: string;
+  active: boolean;
+  description: string;
+  technologies: readonly string[];
+  links?: { type: string; href: string; icon: ReactNode }[];
+  image?: string;
+  video?: string;
+};
+
 type Hackathon = {
   title: string;
   dates: string;
@@ -103,7 +138,7 @@ export const DATA = {
       description:
         "What you did in this role. One or two sentences is enough. Lorem ipsum dolor sit amet.",
     },
-  ],
+  ] as Work[],
 
   // ── Education ─────────────────────────────────────────────
   // One example entry. Set this to [] if you don't want the section.
@@ -116,7 +151,7 @@ export const DATA = {
       start: "2018",
       end: "2022",
     },
-  ],
+  ] as Education[],
 
   // ── Projects ──────────────────────────────────────────────
   // Two example cards. Each can link to a site, source code, image, or video.
@@ -156,7 +191,7 @@ export const DATA = {
       image: "https://placehold.co/600x400?text=Project+Two",
       video: "",
     },
-  ],
+  ] as Project[],
 
   // ── Hackathons / events (optional) ────────────────────────
   // Empty by default, so this section is hidden. Add entries using
