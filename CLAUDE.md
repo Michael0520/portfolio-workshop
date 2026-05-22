@@ -51,9 +51,12 @@ Key consequences when making changes:
   components. Section headings live under `DATA.sections`, not in the section components.
 - **To show/hide a section**, flip `DATA.sections.<name>.enabled`. `page.tsx` gates
   Projects, Hackathons, and Contact on this flag. `hackathons` ships disabled (empty data).
-- `DATA` is `as const`, so its shape is a literal type. Adding a new field that components
-  read is fine; if you remove or rename a field that a component references, update the
-  component too (there is no separate type definition file to keep in sync).
+- `DATA` is `as const`, so its shape is a literal type. The content arrays (`work`,
+  `education`, `projects`, `hackathons`) are annotated with element types defined at the top
+  of `resume.tsx` (`Work`, `Education`, `Project`, `Hackathon`) via `[...] as Type[]`. This is
+  deliberate: without it, emptying an array under `as const` infers `never[]` and the matching
+  section's `.map()` breaks the build. So emptying any array to hide a section is build-safe —
+  but if you add/rename a field a component reads, update both the array and its type.
 - The contact section links to `DATA.contact.social.X.url` specifically — if that social
   block is removed, update `contact-section.tsx`.
 

@@ -38,6 +38,10 @@ Each section's heading and visibility is config-driven, under
 - `enabled` — set to `false` to hide a whole section (e.g. `hackathons`
   is hidden by default until you add entries)
 
+You can also empty a content array (e.g. `education: []`, `projects: []`)
+to drop a section's entries — the build stays green either way, so delete
+freely what you don't need.
+
 ## Deploy
 
 Push to GitHub, then import the repo at [vercel.com](https://vercel.com) —
